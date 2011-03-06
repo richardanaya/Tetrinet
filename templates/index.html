@@ -1,9 +1,31 @@
 <html>
 <head>
-<script src="/socket.io/socket.io.js"></script> 
+<script src="http://localhost:8000/socket.io/socket.io.js"></script> 
 <script src="/js/jquery.min.js"></script>
+<script> 
+ var socket = new io.Socket('localhost'); 
+ socket.connect();
+ socket.on('connect', function(){ $("#chat_area").append("You are connected...<br/>"); }) 
+ socket.on('message', function(data){ $("#chat_area").append(data); }) 
+ socket.on('disconnect', function(){ $("#chat_area").append("Connection terminated.<br/>"); }) 
+
+send_msg = function() {
+  socket.send('{{name}}: '+$('#chat_msg').val()+'<br/>');
+  $('#chat_msg').val('');
+}
+</script> 
 </head>
 <body>
-Hello World!
+Hallo {{name}}!
+<input type="text" id="chat_msg"/><input type="button" onclick="send_msg();"/>
+<div id="chat_area">
+</div>
+<script>
+$("#chat_msg").keyup(function(event){
+  if(event.keyCode == 13){
+    send_msg();
+  }
+});
+</script>
 </body>
 </html>

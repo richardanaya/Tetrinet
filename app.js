@@ -1,5 +1,6 @@
 var nun = require('nun');
 var nerve = require("./lib/nerve/nerve");
+var io = require('socket.io');
  
 var render = function(res,template,data) {
   if( data == undefined ) {
@@ -15,15 +16,14 @@ var render = function(res,template,data) {
 
 var get = nerve.get;
 var app = [
-  [get(/^\/index$/), function (req, res, name) {
-    render(res,'index.html');
+  [get(/^\/chat\/(\w+)$/), function (req, res, name) {
+    render(res,'index.html',{name:name});
   }]
 ];
 
 var server = nerve.create(app, {session_duration: 10000, document_root: './static'})
 server.listen(8757);
 
-var io = require('socket.io');
 var clients = [];
 
 var socket = io.listen(server); 
