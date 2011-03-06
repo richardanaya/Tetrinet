@@ -24,7 +24,7 @@ var server = nerve.create(app, {session_duration: 10000, document_root: './stati
 server.listen(8000);
 
 //WebSocket Setup, delete below this line if you don't use
-var io = require('socket.io');
+/*var io = require('socket.io');
 var clients = [];
 
 var socket = io.listen(server); 
@@ -46,4 +46,4 @@ socket.on('connection', function(client){
     } 
   });
 }); 
-
+*/
